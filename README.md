@@ -47,14 +47,14 @@ CREATE TABLE Doctor (
 CREATE TABLE District (
     id INT IDENTITY(1,1) PRIMARY KEY ,
     number INT NOT NULL,
-    doctor_id INT REFERENCES Doctor(id) ON DELETE SET NULL
+    doctor_id INT REFERENCES Doctor(id) ON DELETE NO ACTION
 );
 
 CREATE TABLE Schedule (
     id INT IDENTITY(1,1) PRIMARY KEY,
     day_of_the_week NVARCHAR(15) NOT NULL,
     start_time TIME NOT NULL,
-    duration INT NOT NULL,
+    duration INT NOT NULL CHECK (Duration > 0),
     doctor_id INT REFERENCES Doctor(id) ON DELETE CASCADE
 );
 
@@ -62,14 +62,14 @@ CREATE TABLE Patient (
     id INT IDENTITY(1,1) PRIMARY KEY,
     phone NVARCHAR(20),
     full_name NVARCHAR(50) NOT NULL,
-    district_Id INT REFERENCES District(id) ON DELETE SET NULL
+    district_Id INT REFERENCES District(id) ON DELETE NO ACTION
 );
 
 CREATE TABLE Reception (
     id INT IDENTITY(1,1) PRIMARY KEY,
     reception_time DATETIME NOT NULL,
     diagnosis NVARCHAR(100),
-    patient_id INT REFERENCES Patient(id) ON DELETE CASCADE,
+    patient_id INT REFERENCES Patient(id) ON DELETE NO ACTION,
     doctor_id INT REFERENCES Doctor(id) ON DELETE NO ACTION
 );
 
