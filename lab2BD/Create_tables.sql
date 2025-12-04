@@ -32,7 +32,8 @@ CREATE TABLE Reception (
     reception_time DATETIME NOT NULL,
     diagnosis NVARCHAR(100),
     patient_id INT REFERENCES Patient(id) ON DELETE NO ACTION,
-    doctor_id INT REFERENCES Doctor(id) ON DELETE NO ACTION
+    doctor_id INT REFERENCES Doctor(id) ON DELETE NO ACTION,
+    stattalon_id INT REFERENCES Stattalon(id) ON DELETE NO ACTION -- Новый столбец
 );
 
 CREATE TABLE Stattalon (
@@ -41,4 +42,5 @@ CREATE TABLE Stattalon (
     schedule_id INT REFERENCES Schedule(id) ON DELETE CASCADE,
     doctor_id INT REFERENCES Doctor(id) ON DELETE NO ACTION,
     patient_id INT REFERENCES Patient(id) ON DELETE NO ACTION
+
 );
