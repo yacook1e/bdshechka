@@ -3,6 +3,7 @@
 <p align="center">
   <a href="#-lab1"><img alt="lab1" src="https://img.shields.io/badge/Lab1-blue"></a> 
   <a href="#-lab2"><img alt="lab2" src="https://img.shields.io/badge/Lab2-red"></a>
+  <a href="#-lab2"><img alt="lab2" src="https://img.shields.io/badge/Lab3-green"></a>
 </p>
 
 # <img src="https://github.com/user-attachments/assets/e080adec-6af7-4bd2-b232-d43cb37024ac" width="20" height="20"/> Lab1
@@ -111,3 +112,11 @@ Stattalon
 District
 
 ![image](/lab2BD/lab2district.png)
+
+# <img src="https://github.com/user-attachments/assets/e080adec-6af7-4bd2-b232-d43cb37024ac" width="20" height="20"/> Lab3
+
+[Назад](#content)
+
+<h3 align="center">
+  [Отчёт](/lab3BD/Kudryavcev_PMI32.docx)
+</h3>
