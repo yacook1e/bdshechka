@@ -118,5 +118,6 @@ District
 [Назад](#content)
 
 <h3 align="center">
-  [Отчёт](/lab3BD/Kudryavcev_PMI32.docx)
 </h3>
+
+[Отчёт](/lab3BD/Kudryavcev_PMI32.docx)
