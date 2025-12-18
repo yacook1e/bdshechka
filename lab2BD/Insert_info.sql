@@ -73,3 +73,16 @@ VALUES
 (N'Боль в горле', 9, 9, 9),
 
 (N'Заложенность уха', 10, 10, 10);
+
+ALTER TABLE Patient ADD Age INT;
+
+UPDATE Patient SET Age = 25 WHERE Phone = N'+79211111111';
+UPDATE Patient SET Age = 30 WHERE Phone = N'+79212222222';
+UPDATE Patient SET Age = 42 WHERE Phone = N'+79213333333';
+UPDATE Patient SET Age = 60 WHERE Phone = N'+79214444444';
+UPDATE Patient SET Age = 16 WHERE Phone = N'+79215555555';
+UPDATE Patient SET Age = 35 WHERE Phone = N'+79216666666';
+UPDATE Patient SET Age = 50 WHERE Phone = N'+79217777777';
+UPDATE Patient SET Age = 28 WHERE Phone = N'+79218888888';
+UPDATE Patient SET Age = 70 WHERE Phone = N'+79219999999';
+UPDATE Patient SET Age = 40 WHERE Phone = N'+79210000000';
