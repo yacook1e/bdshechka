@@ -1,39 +1,39 @@
--- сортировка по двум полям
+-- Г±Г®Г°ГІГЁГ°Г®ГўГЄГ  ГЇГ® Г¤ГўГіГ¬ ГЇГ®Г«ГїГ¬
 SELECT * FROM Doctor
 ORDER BY Speciality ASC, Full_name DESC;
 GO
 
 -- where
 SELECT * FROM Doctor
-WHERE Speciality = N'Терапевт';
+WHERE Speciality = N'Г’ГҐГ°Г ГЇГҐГўГІ';
 GO
 
--- where с несколькими условиями
+-- where Г± Г­ГҐГ±ГЄГ®Г«ГјГЄГЁГ¬ГЁ ГіГ±Г«Г®ГўГЁГїГ¬ГЁ
 SELECT Full_name, Age, District_Id FROM Patient
 WHERE Age >= 40 AND District_Id = 5;
 GO
 
--- агрегатные функции без группировки
+-- Г ГЈГ°ГҐГЈГ ГІГ­Г»ГҐ ГґГіГ­ГЄГ¶ГЁГЁ ГЎГҐГ§ ГЈГ°ГіГЇГЇГЁГ°Г®ГўГЄГЁ
 SELECT 
-    COUNT(*) AS [Количество пациентов],
-    AVG(Age) AS [Средний возраст]
+    COUNT(*) AS [ГЉГ®Г«ГЁГ·ГҐГ±ГІГўГ® ГЇГ Г¶ГЁГҐГ­ГІГ®Гў],
+    AVG(Age) AS [Г‘Г°ГҐГ¤Г­ГЁГ© ГўГ®Г§Г°Г Г±ГІ]
 FROM Patient;
 GO
 
--- агрегатные функции с группировкой
+-- Г ГЈГ°ГҐГЈГ ГІГ­Г»ГҐ ГґГіГ­ГЄГ¶ГЁГЁ Г± ГЈГ°ГіГЇГЇГЁГ°Г®ГўГЄГ®Г©
 SELECT 
     District_Id,
-    COUNT(*) AS [Кол-во пациентов],
-    MIN(Age) AS [Минимальный возраст]
+    COUNT(*) AS [ГЉГ®Г«-ГўГ® ГЇГ Г¶ГЁГҐГ­ГІГ®Гў],
+    MIN(Age) AS [ГЊГЁГ­ГЁГ¬Г Г«ГјГ­Г»Г© ГўГ®Г§Г°Г Г±ГІ]
 FROM Patient
 GROUP BY District_Id;
 GO
 
 -- rollup
 SELECT 
-    COALESCE(Speciality, 'Итого') AS [Специальность],
-    COALESCE(CAST(Office_number AS NVARCHAR(20)), 'Все кабинеты') AS [Номер кабинета],
-    COUNT(*) AS [Количество врачей]
+    COALESCE(Speciality, 'Г€ГІГ®ГЈГ®') AS [Г‘ГЇГҐГ¶ГЁГ Г«ГјГ­Г®Г±ГІГј],
+    COALESCE(CAST(Office_number AS NVARCHAR(20)), 'Г‚Г±ГҐ ГЄГ ГЎГЁГ­ГҐГІГ»') AS [ГЌГ®Г¬ГҐГ° ГЄГ ГЎГЁГ­ГҐГІГ ],
+    COUNT(*) AS [ГЉГ®Г«ГЁГ·ГҐГ±ГІГўГ® ГўГ°Г Г·ГҐГ©]
 FROM Doctor
 GROUP BY ROLLUP (Speciality, Office_number)
 ORDER BY Speciality, Office_number;
@@ -41,9 +41,9 @@ GO
 
 -- cube
 SELECT 
-    COALESCE(Diagnosis, 'Все диагнозы') AS [Диагноз],
-    COALESCE(CAST(Doctor_Id AS NVARCHAR(20)), 'Все врачи') AS [ID врача],
-    COUNT(*) AS [Количество приемов]
+    COALESCE(Diagnosis, 'Г‚Г±ГҐ Г¤ГЁГ ГЈГ­Г®Г§Г»') AS [Г„ГЁГ ГЈГ­Г®Г§],
+    COALESCE(CAST(Doctor_Id AS NVARCHAR(20)), 'Г‚Г±ГҐ ГўГ°Г Г·ГЁ') AS [ID ГўГ°Г Г·Г ],
+    COUNT(*) AS [ГЉГ®Г«ГЁГ·ГҐГ±ГІГўГ® ГЇГ°ГЁГҐГ¬Г®Гў]
 FROM Reception
 GROUP BY CUBE (Diagnosis, Doctor_Id)
 ORDER BY Diagnosis, Doctor_Id;
@@ -51,25 +51,25 @@ GO
 
 -- like
 SELECT * FROM Patient
-WHERE Full_name NOT LIKE N'%ова%';
+WHERE Full_name NOT LIKE N'%Г®ГўГ %';
 GO
 
 -- where
 SELECT 
     r.Reception_time,
     r.Diagnosis,
-    p.Full_name AS [Пациент],
-    d.Full_name AS [Врач]
+    p.Full_name AS [ГЏГ Г¶ГЁГҐГ­ГІ],
+    d.Full_name AS [Г‚Г°Г Г·]
 FROM Reception r, Patient p, Doctor d
 WHERE r.Patient_ID = p.Id AND r.Doctor_Id = d.Id;
 GO
 
 -- inner join
 SELECT 
-    p.Full_name AS Пациент,
-    p.Age AS Возраст,
-    d.Number AS Участок,
-    dr.Full_name AS [Участковый врач]
+    p.Full_name AS ГЏГ Г¶ГЁГҐГ­ГІ,
+    p.Age AS Г‚Г®Г§Г°Г Г±ГІ,
+    d.Number AS Г“Г·Г Г±ГІГ®ГЄ,
+    dr.Full_name AS [Г“Г·Г Г±ГІГЄГ®ГўГ»Г© ГўГ°Г Г·]
 FROM Patient p
 INNER JOIN District d ON p.District_Id = d.Id
 INNER JOIN Doctor dr ON d.Doctor_Id = dr.Id;
@@ -77,9 +77,9 @@ GO
 
 -- inner join 2
 SELECT 
-    d.Full_name AS Врач,
-    d.Speciality AS Специальность,
-    COUNT(r.Id) AS [Количество приемов]
+    d.Full_name AS Г‚Г°Г Г·,
+    d.Speciality AS Г‘ГЇГҐГ¶ГЁГ Г«ГјГ­Г®Г±ГІГј,
+    COUNT(r.Id) AS [ГЉГ®Г«ГЁГ·ГҐГ±ГІГўГ® ГЇГ°ГЁГҐГ¬Г®Гў]
 FROM Doctor d
 INNER JOIN Reception r ON d.Id = r.Doctor_Id
 GROUP BY d.Full_name, d.Speciality;
@@ -97,10 +97,10 @@ GO
 
 -- left join 2
 SELECT 
-    p.Full_name AS Пациент,
-    p.Age AS Возраст,
-    r.Reception_time AS [Дата приема],
-    r.Diagnosis AS Диагноз
+    p.Full_name AS ГЏГ Г¶ГЁГҐГ­ГІ,
+    p.Age AS Г‚Г®Г§Г°Г Г±ГІ,
+    r.Reception_time AS [Г„Г ГІГ  ГЇГ°ГЁГҐГ¬Г ],
+    r.Diagnosis AS Г„ГЁГ ГЈГ­Г®Г§
 FROM Patient p
 LEFT JOIN Reception r ON p.Id = r.Patient_ID;
 GO
@@ -117,30 +117,30 @@ GO
 
 -- right join 2
 SELECT 
-    s.Day_of_the_week AS День,
-    s.Start_time AS [Время начала],
-    d.Speciality AS Специальность,
-    d.Office_number AS Кабинет
+    s.Day_of_the_week AS Г„ГҐГ­Гј,
+    s.Start_time AS [Г‚Г°ГҐГ¬Гї Г­Г Г·Г Г«Г ],
+    d.Speciality AS Г‘ГЇГҐГ¶ГЁГ Г«ГјГ­Г®Г±ГІГј,
+    d.Office_number AS ГЉГ ГЎГЁГ­ГҐГІ
 FROM Schedule s
 RIGHT JOIN Doctor d ON s.Doctor_Id = d.Id
 ORDER BY s.Day_of_the_week, s.Start_time;
 GO
 
--- агрегатные функции
+-- Г ГЈГ°ГҐГЈГ ГІГ­Г»ГҐ ГґГіГ­ГЄГ¶ГЁГЁ
 SELECT 
-    d.Full_name AS [Врач],
-    COUNT(r.Patient_ID) AS [Количество приемов]
+    d.Full_name AS [Г‚Г°Г Г·],
+    COUNT(r.Patient_ID) AS [ГЉГ®Г«ГЁГ·ГҐГ±ГІГўГ® ГЇГ°ГЁГҐГ¬Г®Гў]
 FROM Doctor d
 LEFT JOIN Reception r ON d.Id = r.Doctor_Id
 GROUP BY d.Full_name;
 GO
 
--- агрегатные функции 2
+-- Г ГЈГ°ГҐГЈГ ГІГ­Г»ГҐ ГґГіГ­ГЄГ¶ГЁГЁ 2
 SELECT 
-    Day_of_the_week AS День,
-    COUNT(*) AS [Количество слотов],
-    MIN(Start_time) AS [Самое раннее время],
-    MAX(Start_time) AS [Самое позднее время]
+    Day_of_the_week AS Г„ГҐГ­Гј,
+    COUNT(*) AS [ГЉГ®Г«ГЁГ·ГҐГ±ГІГўГ® Г±Г«Г®ГІГ®Гў],
+    MIN(Start_time) AS [Г‘Г Г¬Г®ГҐ Г°Г Г­Г­ГҐГҐ ГўГ°ГҐГ¬Гї],
+    MAX(Start_time) AS [Г‘Г Г¬Г®ГҐ ГЇГ®Г§Г¤Г­ГҐГҐ ГўГ°ГҐГ¬Гї]
 FROM Schedule
 GROUP BY Day_of_the_week;
 GO
@@ -148,7 +148,7 @@ GO
 -- having
 SELECT 
     Doctor_Id,
-    COUNT(*) AS [Количество приемов]
+    COUNT(*) AS [ГЉГ®Г«ГЁГ·ГҐГ±ГІГўГ® ГЇГ°ГЁГҐГ¬Г®Гў]
 FROM Reception
 GROUP BY Doctor_Id
 HAVING COUNT(*) >= 1;
@@ -156,8 +156,8 @@ GO
 
 -- having 2
 SELECT 
-    Day_of_the_week AS День,
-    COUNT(*) AS [Количество записей]
+    Day_of_the_week AS Г„ГҐГ­Гј,
+    COUNT(*) AS [ГЉГ®Г«ГЁГ·ГҐГ±ГІГўГ® Г§Г ГЇГЁГ±ГҐГ©]
 FROM Schedule
 GROUP BY Day_of_the_week
 HAVING COUNT(*) > 1;
@@ -168,16 +168,16 @@ SELECT * FROM Patient
 WHERE District_Id IN (
     SELECT Id FROM District 
     WHERE Doctor_Id IN (
-        SELECT Id FROM Doctor WHERE Speciality = N'Терапевт'
+        SELECT Id FROM Doctor WHERE Speciality = N'Г’ГҐГ°Г ГЇГҐГўГІ'
     )
 );
 GO
 
 -- in 2
 SELECT 
-    Full_name AS Пациент,
-    Age AS Возраст,
-    District_Id AS Участок
+    Full_name AS ГЏГ Г¶ГЁГҐГ­ГІ,
+    Age AS Г‚Г®Г§Г°Г Г±ГІ,
+    District_Id AS Г“Г·Г Г±ГІГ®ГЄ
 FROM Patient
 WHERE District_Id IN (1, 2, 3);
 GO
@@ -187,11 +187,11 @@ GO
 SELECT * FROM Doctor d
 WHERE EXISTS (
     SELECT 1 FROM Schedule s 
-    WHERE s.Doctor_Id = d.Id AND s.Day_of_the_week = N'Понедельник'
+    WHERE s.Doctor_Id = d.Id AND s.Day_of_the_week = N'ГЏГ®Г­ГҐГ¤ГҐГ«ГјГ­ГЁГЄ'
 );
 GO
 
--- представление
+-- ГЇГ°ГҐГ¤Г±ГІГ ГўГ«ГҐГ­ГЁГҐ
 IF OBJECT_ID('vw_ReceptionDetails', 'V') IS NOT NULL
     DROP VIEW vw_ReceptionDetails;
 GO
@@ -210,10 +210,10 @@ INNER JOIN Patient p ON r.Patient_ID = p.Id
 INNER JOIN Doctor d ON r.Doctor_Id = d.Id;
 GO
 
-SELECT * FROM vw_ReceptionDetails WHERE Diagnosis = N'Пневмония';
+SELECT * FROM vw_ReceptionDetails WHERE Diagnosis = N'ГЏГ­ГҐГўГ¬Г®Г­ГЁГї';
 GO
 
--- представление 2
+-- ГЇГ°ГҐГ¤Г±ГІГ ГўГ«ГҐГ­ГЁГҐ 2
 IF OBJECT_ID('vw_DistrictPatientCount', 'V') IS NOT NULL
     DROP VIEW vw_DistrictPatientCount;
 GO
@@ -230,7 +230,7 @@ GO
 SELECT * FROM vw_DistrictPatientCount ORDER BY PatientCount DESC;
 GO
 
--- cte с ранжированием
+-- cte Г± Г°Г Г­Г¦ГЁГ°Г®ГўГ Г­ГЁГҐГ¬
 WITH DoctorReceptionCount AS (
     SELECT 
         Doctor_Id,
@@ -247,7 +247,7 @@ FROM DoctorReceptionCount rc
 INNER JOIN Doctor d ON rc.Doctor_Id = d.Id;
 GO
 
--- рекурсивное cte
+-- Г°ГҐГЄГіГ°Г±ГЁГўГ­Г®ГҐ cte
 WITH RankedDoctors AS (
     SELECT 
         Id,
@@ -277,7 +277,7 @@ SELECT
 FROM Patient;
 GO
 
--- rank и dense_rank
+-- rank ГЁ dense_rank
 WITH ScheduleCount AS (
     SELECT 
         Doctor_Id,
@@ -295,7 +295,7 @@ INNER JOIN Doctor d ON sc.Doctor_Id = d.Id;
 GO
 
 -- union all
-SELECT Speciality AS [Название] FROM Doctor
+SELECT Speciality AS [ГЌГ Г§ГўГ Г­ГЁГҐ] FROM Doctor
 UNION ALL
 SELECT Diagnosis FROM Reception;
 GO
@@ -307,14 +307,14 @@ SELECT DISTINCT p.Id, p.Full_name
 FROM Patient p
 INNER JOIN Reception r ON p.Id = r.Patient_ID
 INNER JOIN Doctor d ON r.Doctor_Id = d.Id
-WHERE d.Speciality = N'Терапевт';
+WHERE d.Speciality = N'Г’ГҐГ°Г ГЇГҐГўГІ';
 GO
 
 -- intersect
-SELECT Full_name AS [Пациенты, посещавшие терапевта]
+SELECT Full_name AS [ГЏГ Г¶ГЁГҐГ­ГІГ», ГЇГ®Г±ГҐГ№Г ГўГёГЁГҐ ГІГҐГ°Г ГЇГҐГўГІГ ]
 FROM Patient
 WHERE Id IN (
-    SELECT Patient_ID FROM Reception WHERE Doctor_Id IN (SELECT Id FROM Doctor WHERE Speciality = N'Терапевт')
+    SELECT Patient_ID FROM Reception WHERE Doctor_Id IN (SELECT Id FROM Doctor WHERE Speciality = N'Г’ГҐГ°Г ГЇГҐГўГІ')
 )
 ORDER BY Full_name;
 GO
@@ -340,7 +340,7 @@ SELECT * FROM (
     SELECT DayOfWeek FROM ReceptionsByDay
 ) AS SourceTable
 PIVOT (
-    COUNT(DayOfWeek) FOR DayOfWeek IN ([понедельник], [вторник], [среда], [четверг], [пятница], [суббота], [воскресенье])
+    COUNT(DayOfWeek) FOR DayOfWeek IN ([ГЇГ®Г­ГҐГ¤ГҐГ«ГјГ­ГЁГЄ], [ГўГІГ®Г°Г­ГЁГЄ], [Г±Г°ГҐГ¤Г ], [Г·ГҐГІГўГҐГ°ГЈ], [ГЇГїГІГ­ГЁГ¶Г ], [Г±ГіГЎГЎГ®ГІГ ], [ГўГ®Г±ГЄГ°ГҐГ±ГҐГ­ГјГҐ])
 ) AS PivotTable;
 GO
 
@@ -348,20 +348,20 @@ GO
 WITH PivotData AS (
     SELECT 
         District_Id,
-        COUNT(CASE WHEN Age < 18 THEN 1 END) AS [Дети],
-        COUNT(CASE WHEN Age BETWEEN 18 AND 60 THEN 1 END) AS [Взрослые],
-        COUNT(CASE WHEN Age > 60 THEN 1 END) AS [Пенсионеры]
+        COUNT(CASE WHEN Age < 18 THEN 1 END) AS [Г„ГҐГІГЁ],
+        COUNT(CASE WHEN Age BETWEEN 18 AND 60 THEN 1 END) AS [Г‚Г§Г°Г®Г±Г«Г»ГҐ],
+        COUNT(CASE WHEN Age > 60 THEN 1 END) AS [ГЏГҐГ­Г±ГЁГ®Г­ГҐГ°Г»]
     FROM Patient
     GROUP BY District_Id
 )
 SELECT District_Id, AgeGroup, PatientCount
 FROM PivotData
 UNPIVOT (
-    PatientCount FOR AgeGroup IN ([Дети], [Взрослые], [Пенсионеры])
+    PatientCount FOR AgeGroup IN ([Г„ГҐГІГЁ], [Г‚Г§Г°Г®Г±Г«Г»ГҐ], [ГЏГҐГ­Г±ГЁГ®Г­ГҐГ°Г»])
 ) AS Unpivot_test;
 GO
 
--- часть 2 а
+-- Г·Г Г±ГІГј 2 Г 
 SELECT 
     s.Day_of_the_week,
     s.Start_time,
@@ -370,7 +370,7 @@ SELECT
 FROM Schedule s
 INNER JOIN Doctor d ON s.Doctor_Id = d.Id
 WHERE d.Id = 1 
-    AND s.Day_of_the_week = N'Понедельник'
+    AND s.Day_of_the_week = N'ГЏГ®Г­ГҐГ¤ГҐГ«ГјГ­ГЁГЄ'
     AND NOT EXISTS (
         SELECT 1 FROM Reception r 
         WHERE r.Doctor_Id = s.Doctor_Id 
@@ -379,7 +379,7 @@ WHERE d.Id = 1
     );
 GO
 
--- часть 2 б
+-- Г·Г Г±ГІГј 2 ГЎ
 SELECT 
     r.Reception_time,
     r.Diagnosis,
@@ -388,12 +388,12 @@ SELECT
 FROM Reception r
 INNER JOIN Patient p ON r.Patient_ID = p.Id
 INNER JOIN Doctor d ON r.Doctor_Id = d.Id
-WHERE p.Full_name = N'Смирнов Константин Дмитриевич'
+WHERE p.Full_name = N'Г‘Г¬ГЁГ°Г­Г®Гў ГЉГ®Г­Г±ГІГ Г­ГІГЁГ­ Г„Г¬ГЁГІГ°ГЁГҐГўГЁГ·'
     AND r.Reception_time >= '2024-01-01'
 ORDER BY r.Reception_time;
 GO
 
--- часть 2 c
+-- Г·Г Г±ГІГј 2 c
 SELECT DISTINCT
     d.Full_name,
     d.Speciality,
@@ -404,19 +404,19 @@ INNER JOIN Doctor d ON s.Doctor_Id = d.Id
 WHERE s.Day_of_the_week = DATENAME(weekday, GETDATE());
 GO
 
--- часть 2 d
+-- Г·Г Г±ГІГј 2 d
 SELECT 
     CASE 
         WHEN p.Age BETWEEN 14 AND 18 THEN '14-18'
         WHEN p.Age BETWEEN 19 AND 45 THEN '19-45'
         WHEN p.Age BETWEEN 46 AND 65 THEN '46-65'
         WHEN p.Age >= 66 THEN '66+'
-        ELSE 'Другое'
+        ELSE 'Г„Г°ГіГЈГ®ГҐ'
     END AS AgeGroup,
     COUNT(*) AS PneumoniaCount
 FROM Reception r
 INNER JOIN Patient p ON r.Patient_ID = p.Id
-WHERE r.Diagnosis = N'Пневмония'
+WHERE r.Diagnosis = N'ГЏГ­ГҐГўГ¬Г®Г­ГЁГї'
     AND r.Reception_time >= '2024-01-01'
 GROUP BY 
     CASE 
@@ -424,19 +424,19 @@ GROUP BY
         WHEN p.Age BETWEEN 19 AND 45 THEN '19-45'
         WHEN p.Age BETWEEN 46 AND 65 THEN '46-65'
         WHEN p.Age >= 66 THEN '66+'
-        ELSE 'Другое'
+        ELSE 'Г„Г°ГіГЈГ®ГҐ'
     END
 ORDER BY AgeGroup;
 GO
 
--- часть 2 e
+-- Г·Г Г±ГІГј 2 e
 SELECT 
     dist.Number AS DistrictNumber,
     COUNT(r.Id) AS VisitCount
-FROM Reception r
-INNER JOIN Patient p ON r.Patient_ID = p.Id
-INNER JOIN District dist ON p.District_Id = dist.Id
-WHERE CAST(r.Reception_time AS DATE) = '2024-01-17'
+FROM District dist
+LEFT JOIN Patient p ON dist.Id = p.District_Id
+LEFT JOIN Reception r ON p.Id = r.Patient_ID 
+    AND CAST(r.Reception_time AS DATE) = '2024-01-17'
 GROUP BY dist.Number
 ORDER BY VisitCount DESC;
 GO
