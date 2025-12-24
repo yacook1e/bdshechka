@@ -44,3 +44,15 @@ CREATE TABLE Stattalon (
     patient_id INT REFERENCES Patient(id) ON DELETE NO ACTION
 
 );
+
+CREATE TABLE Street (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    name NVARCHAR(100) NOT NULL,
+    district_id INT FOREIGN KEY REFERENCES District(id)
+);
+
+CREATE TABLE House (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    street_id INT FOREIGN KEY REFERENCES Street(id),
+    number NVARCHAR(20) NOT NULL
+);
