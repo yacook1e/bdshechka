@@ -6,6 +6,7 @@
   <a href="#-lab3"><img alt="lab3" src="https://img.shields.io/badge/Lab3-green"></a>
    <a href="#-lab4"><img alt="lab4" src="https://img.shields.io/badge/Lab4-pink"></a>
   <a href="#-lab5"><img alt="lab5" src="https://img.shields.io/badge/Lab5-black"></a>
+  <a href="#-lab5"><img alt="lab5" src="https://img.shields.io/badge/Lab6-purple"></a>
 </p>
 
 # <img src="https://github.com/user-attachments/assets/e080adec-6af7-4bd2-b232-d43cb37024ac" width="20" height="20"/> Lab1
@@ -208,4 +209,13 @@ c) Замещающий триггер на операцию удаления с
 ![image](/lab5BD/script_1.jpg)
 ![image](/lab5BD/script_2.jpg)
 
+# <img src="https://github.com/user-attachments/assets/e080adec-6af7-4bd2-b232-d43cb37024ac" width="20" height="20"/> Lab6
 
+[Назад](#content)
+  <a href="#client"></a>
+  Используйте реляционную БД из лабораторной работы №2.
+Продумайте и создайте графовые таблицы по реляционной БД, заполните графовые таблицы используя данные в реляционных таблицах.
+Напишите запросы из задания 3.2 используя паттерн MATCH.
+
+
+![image](/lab6BD/Node_Table.jpg)
