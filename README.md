@@ -221,3 +221,5 @@ c) Замещающий триггер на операцию удаления с
 
 
 ![image](/Lab6BD/Node_Table.jpg)
+
+[script](/Lab6BD/Lab_6.sql)
