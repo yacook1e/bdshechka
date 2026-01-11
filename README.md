@@ -236,6 +236,7 @@ c) Замещающий триггер на операцию удаления с
   
 Подготовить SQL-скрипты для выполнения проверок изолированности транзакций. Ваши скрипты должны работать с одной из таблиц, созданных в лабораторной работе №2.
 
+
 READ UNCOMMITED
 
 ![image](/Lab7BD/readuncommited/lost_1.jpg)
@@ -247,6 +248,7 @@ READ UNCOMMITED
 ![image](/Lab7BD/readuncommited/dirty_2.jpg)
 
 Вторая транзакция прочитала незафиксированные данные из первой транзакции
+
 
 READ COMMITED
 
@@ -260,6 +262,7 @@ READ COMMITED
 
 Второе чтение в первой транзакции показало измененные данные
 
+
 REPEATABLE READ
 
 ![image](/Lab7BD/repeatableread/unrepeat_1.jpg)
@@ -272,6 +275,7 @@ REPEATABLE READ
 ![image](/Lab7BD/repeatableread/phant_2.jpg)
 
 Появились новые строки при повторном чтении.
+
 
 SERIALIZABLE
 
