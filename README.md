@@ -250,8 +250,8 @@ READ UNCOMMITED
 
 READ COMMITED
 
-![image](/Lab7BD/readcommited/lost_1.jpg)
-![image](/Lab7BD/readcommited/lost_2.jpg)
+![image](/Lab7BD/readcommited/dirty_1.jpg)
+![image](/Lab7BD/readcommited/dirty_2.jpg)
 
 Грязное чтение предотвращено, вторая транзакция не видит незафиксированных изменений
 
