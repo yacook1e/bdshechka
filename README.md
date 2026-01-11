@@ -263,6 +263,7 @@ READ COMMITED
 REPEATABLE READ
 
 ![image](/Lab7BD/repeatableread/unrepeat_1.jpg)
+
 ![image](/Lab7BD/repeatableread/unrepeat_2.jpg)
 
 Неповторяющееся чтение предотвращено, вторая транзакция ожидает завершения первой
