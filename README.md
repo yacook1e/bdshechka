@@ -224,3 +224,57 @@ c) Замещающий триггер на операцию удаления с
 ![image](/Lab6BD/Node_Table.jpg)
 
 [script](/Lab6BD/Lab_6.sql)
+
+
+# <img src="https://github.com/user-attachments/assets/e080adec-6af7-4bd2-b232-d43cb37024ac" width="20" height="20"/> Lab7
+
+[Назад](#content)
+  <a href="#client"></a>
+  Используя базу, полученную в лабораторной 2, создать транзакцию, произвести ее откат и фиксацию. Показать, что данные существовали до отката, удалились после отката, снова были добавлены, и затем были успешно зафиксированы. При необходимости используйте точки сохранения и вложенные транзакции.
+
+[script](/Lab7BD/1_script.sql)
+  
+Подготовить SQL-скрипты для выполнения проверок изолированности транзакций. Ваши скрипты должны работать с одной из таблиц, созданных в лабораторной работе №2.
+
+READ UNCOMMITED
+
+![image](/Lab7BD/readuncommited/lost_1.jpg)
+![image](/Lab7BD/readuncommited/lost_2.jpg)
+
+Изменения первой транзакции потеряны, вторая транзакция перезаписала данные до фиксации первой
+
+![image](/Lab7BD/readuncommited/dirty_1.jpg)
+![image](/Lab7BD/readuncommited/dirty_2.jpg)
+
+Вторая транзакция прочитала незафиксированные данные из первой транзакции
+
+READ COMMITED
+
+![image](/Lab7BD/readcommited/lost_1.jpg)
+![image](/Lab7BD/readcommited/lost_2.jpg)
+
+Грязное чтение предотвращено, вторая транзакция не видит незафиксированных изменений
+
+![image](/Lab7BD/readcommited/unrepeat_1.jpg)
+![image](/Lab7BD/readcommited/unrepeat_2.jpg)
+
+Второе чтение в первой транзакции показало измененные данные
+
+REPEATABLE READ
+
+![image](/Lab7BD/repeatableread/unrepeat_1.jpg)
+![image](/Lab7BD/repeatableread/unrepeat_2.jpg)
+
+Неповторяющееся чтение предотвращено, вторая транзакция ожидает завершения первой
+
+![image](/Lab7BD/repeatableread/phant_1.jpg)
+![image](/Lab7BD/repeatableread/phant_2.jpg)
+
+Появились новые строки при повторном чтении.
+
+SERIALIZABLE
+
+![image](/Lab7BD/repeatableread/phant_1.jpg)
+![image](/Lab7BD/repeatableread/phant_2.jpg)
+
+Serializable защитил от фантомного чтения, вторая транзакция ожидает завершения первой.
