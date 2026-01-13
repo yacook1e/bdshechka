@@ -222,7 +222,7 @@ c) Замещающий триггер на операцию удаления с
 Напишите запросы из задания 3.2 используя паттерн MATCH.
 
 
-![image](/Lab6BD/Node_Table.jpg)
+![image](/Lab6BD/Node_Table_.jpg)
 
 [script](/Lab6BD/Lab_6.sql)
 
