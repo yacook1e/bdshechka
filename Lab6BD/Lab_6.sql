@@ -24,7 +24,8 @@ CREATE TABLE PatientNode (
     phone NVARCHAR(20),
     full_name NVARCHAR(50) NOT NULL,
     age INT,
-    district_Id INT
+    street_id INT,
+    house_id INT
 ) AS NODE;
 
 CREATE TABLE ReceptionNode (
@@ -50,7 +51,6 @@ CREATE TABLE HouseNode (
 
 CREATE TABLE works_in AS EDGE; 
 CREATE TABLE has_schedule AS EDGE; 
-CREATE TABLE belongs_to AS EDGE;
 CREATE TABLE attended AS EDGE; 
 CREATE TABLE conducted_by AS EDGE; 
 CREATE TABLE has_stattalon AS EDGE;
@@ -59,6 +59,8 @@ CREATE TABLE issued_by AS EDGE;
 CREATE TABLE issued_to AS EDGE;
 CREATE TABLE located_in AS EDGE; 
 CREATE TABLE has_house AS EDGE; 
+CREATE TABLE lives_on_street AS EDGE;
+CREATE TABLE lives_in_house AS EDGE;
 
 INSERT INTO DoctorNode (id, office_number, full_name, phone, speciality)
 SELECT id, office_number, full_name, phone, speciality FROM Doctor;
@@ -94,10 +96,19 @@ SELECT d.$node_id, s.$node_id
 FROM DoctorNode d
 INNER JOIN Schedule s ON d.id = s.doctor_id;
 
-INSERT INTO belongs_to ($from_id, $to_id)
-SELECT p.$node_id, dist.$node_id
-FROM PatientNode p
-INNER JOIN DistrictNode dist ON p.district_Id = dist.id;
+INSERT INTO lives_on_street ($from_id, $to_id)
+SELECT 
+    pn.$node_id,
+    sn.$node_id
+FROM PatientNode pn
+INNER JOIN StreetNode sn ON pn.street_id = sn.id;
+
+INSERT INTO lives_in_house ($from_id, $to_id)
+SELECT 
+    pn.$node_id,
+    hn.$node_id
+FROM PatientNode pn
+INNER JOIN HouseNode hn ON pn.house_id = hn.id;
 
 INSERT INTO attended ($from_id, $to_id)
 SELECT r.$node_id, p.$node_id
@@ -150,7 +161,7 @@ SELECT
 FROM DoctorNode d, has_schedule hs, ScheduleNode s
 WHERE MATCH(d-(hs)->s)
     AND d.id = 1 
-    AND s.day_of_the_week = N'Понедельник'
+    AND s.day_of_the_week = N'ГЏГ®Г­ГҐГ¤ГҐГ«ГјГ­ГЁГЄ'
     AND NOT EXISTS (
         SELECT 1 
         FROM ReceptionNode r, conducted_by cb, DoctorNode d2
@@ -168,7 +179,7 @@ SELECT
     d.speciality
 FROM PatientNode p, attended a, ReceptionNode r, conducted_by cb, DoctorNode d
 WHERE MATCH(p-(a)->r-(cb)->d)
-    AND p.full_name = N'Смирнов Константин Дмитриевич'
+    AND p.full_name = N'Г‘Г¬ГЁГ°Г­Г®Гў ГЉГ®Г­Г±ГІГ Г­ГІГЁГ­ Г„Г¬ГЁГІГ°ГЁГҐГўГЁГ·'
     AND r.reception_time >= '2024-01-01'
 ORDER BY r.reception_time;
 
@@ -189,12 +200,12 @@ SELECT
         WHEN p.age BETWEEN 19 AND 45 THEN '19-45'
         WHEN p.age BETWEEN 46 AND 65 THEN '46-65'
         WHEN p.age >= 66 THEN '66+'
-        ELSE 'Другое'
+        ELSE 'Г„Г°ГіГЈГ®ГҐ'
     END AS AgeGroup,
     COUNT(*) AS PneumoniaCount
 FROM PatientNode p, attended a, ReceptionNode r
 WHERE MATCH(p-(a)->r)
-    AND r.diagnosis = N'Пневмония'
+    AND r.diagnosis = N'ГЏГ­ГҐГўГ¬Г®Г­ГЁГї'
     AND r.reception_time >= '2024-01-01'
 GROUP BY 
     CASE 
@@ -202,7 +213,7 @@ GROUP BY
         WHEN p.age BETWEEN 19 AND 45 THEN '19-45'
         WHEN p.age BETWEEN 46 AND 65 THEN '46-65'
         WHEN p.age >= 66 THEN '66+'
-        ELSE 'Другое'
+        ELSE 'Г„Г°ГіГЈГ®ГҐ'
     END
 ORDER BY AgeGroup;
 
@@ -214,4 +225,5 @@ FROM DistrictNode dist, belongs_to bt, PatientNode p, attended a, ReceptionNode 
 WHERE MATCH(dist<-(bt)-p-(a)->r)
     AND CAST(r.reception_time AS DATE) = '2024-01-17'
 GROUP BY dist.number
+
 ORDER BY VisitCount DESC;
